@@ -136,7 +136,7 @@ char *get_user_keyword()
 void load_addresses(struct Address **list)
 {
     char line[128];
-    char *name, *surname, *number, *email;
+    char *name = NULL, *surname = NULL, *number = NULL, *email = NULL;
     FILE *data_file = NULL;
     struct Address *address = NULL;
 
