@@ -67,17 +67,18 @@ void delete_address_at_position(struct Address **list)
 void find_by_keyword(struct Address *list)
 {
     char *keyword;
-    struct Address *address = NULL;
+    struct Address *temp_list = NULL;
     keyword = get_user_keyword();
-    address = find_addr_by_keyword(list, keyword);
-    if(address != NULL) {
-        print_node(address);
+    temp_list = find_addr_by_keyword(list, keyword);
+    if(temp_list != NULL) {
+        print_list(temp_list);
     } else {
         printf("No address was found by the keyword - %s\n\n", keyword);
     }
     if(keyword != NULL) {
         free(keyword);
     }
+    delete_list(&temp_list);
     
 }
 

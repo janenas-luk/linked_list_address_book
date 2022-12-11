@@ -129,28 +129,47 @@ int get_list_size(struct Address *list)
     return size;
 }
 
+static struct Address *copy_node(struct Address *src)
+{
+    struct Address *copy = NULL;
+    copy = (struct Address *) malloc(sizeof(struct Address));
+    if (copy == NULL) {
+        return NULL;
+    }
+    strcpy(copy->name, src->name);
+    strcpy(copy->surname, src->surname);
+    strcpy(copy->email, src->email);
+    strcpy(copy->number, src->number);
+    copy->next = NULL;
+    return copy;
+}
+
+/* 
+This functions returns a list of founded addresses
+After use, you need to clean the list
+*/
 struct Address *find_addr_by_keyword(struct Address *list, char *keyword)
 {
-    struct Address *address = NULL;
+    struct Address *temp_list = NULL;
+    struct Address *node = NULL;
     struct Address *temp = list;
+    int found = 0;
     while(temp != NULL) {
         if(strcmp(temp->name, keyword) == 0) {
-            address = temp;
-            break;
+            found = 1;
+        } else if(strcmp(temp->surname, keyword) == 0) {
+            found = 1;
+        } else if(strcmp(temp->email, keyword) == 0) {
+            found = 1;
+        } else if(strcmp(temp->number, keyword) == 0) {
+            found = 1;
         }
-        if(strcmp(temp->surname, keyword) == 0) {
-            address = temp;
-            break;
-        }
-        if(strcmp(temp->email, keyword) == 0) {
-            address = temp;
-            break;
-        }
-        if(strcmp(temp->number, keyword) == 0) {
-            address = temp;
-            break;
+        if(found) {
+            found = 0;
+            node = copy_node(temp);
+            add_to_list(&temp_list, node);
         }
         temp = temp->next;
     }
-    return address;
+    return temp_list;
 }
